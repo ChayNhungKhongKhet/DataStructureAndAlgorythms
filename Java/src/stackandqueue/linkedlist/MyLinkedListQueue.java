@@ -5,22 +5,43 @@ import stackandqueue.IStackAndQueue;
 
 public class MyLinkedListQueue implements IStackAndQueue {
 
-    private ListNode topNode;
+    class Node {
+        int value;
+        Node next;
+
+        public Node(int value) {
+            this.value = value;
+        }
+    }
+    private Node head;
 
     public MyLinkedListQueue() {
-        topNode = null;
+        head = null;
     }
 
     @Override
     public boolean push(int value) {
-        ListNode node = new ListNode(value);
-
-        return false;
+        if (isFull())
+            return false;
+        Node node = new Node(value);
+        Node temp = head;
+        if (head == null) {
+            head = node;
+            return true;
+        }
+        while (temp.next!=null)
+            temp = temp.next;
+        temp.next = node;
+        return true;
     }
 
     @Override
     public int pop() {
-        return 0;
+        if (isEmpty())
+            return -1;
+        int val = head.value;
+        head = head.next;
+        return val;
     }
 
     @Override
@@ -28,13 +49,19 @@ public class MyLinkedListQueue implements IStackAndQueue {
         return false;
     }
 
+
     @Override
     public boolean isEmpty() {
-        return false;
+        return head == null;
     }
 
     @Override
     public void show() {
-
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.value+ " ->");
+            temp = temp.next;
+        }
+        System.out.print("null\n");
     }
 }

@@ -20,9 +20,10 @@ public class MyCircularQueue {
             head = tail = 0;
 
         else
-            tail = (tail+1) % size;//+1 o day vi tail ban dau bang -1
-        // % size thi so du luon nho hon size
-        // % size thi khi tail = size -1 ,duoc cong 1 len thi tail = 0 quay lai index ban dau
+            if (tail == size-1)
+                tail = 0;
+            else
+                tail++;
         data[tail] = value;
         return true;
     }
@@ -34,9 +35,12 @@ public class MyCircularQueue {
             head = tail = -1;
             return true;
         }
-        head = (head+1) % size; //Cycle khi head = size -1
+        if (head == size-1)
+            head = 0;
+        else head++;
         return true;
     }
+
     public int Front() {
         return isEmpty() ? -1 : data[head];
     }
